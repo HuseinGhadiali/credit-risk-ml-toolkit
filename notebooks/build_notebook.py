@@ -58,7 +58,7 @@ cells = [
          "charts.apply_style()\nax = plot_param_importances(study); ax.figure.set_size_inches(7, 4); ax.figure.tight_layout()\n"
          "ax.figure.savefig('../images/optuna_param_importance.png', dpi=130); plt.close(ax.figure)\n"
          "ax = plot_optimization_history(study); ax.figure.set_size_inches(7, 4); ax.figure.tight_layout()\n"
-         "ax.figure.savefig('../images/optuna_history.png', dpi=130); plt.close(ax.figure)\n"
+         "ax.figure.savefig('../images/optuna_history.png', dpi=130); plt.close(ax.figure)\nplt.style.use('default'); charts.apply_style()   # optuna switched the global style to ggplot\n"
          "display(Image('../images/optuna_param_importance.png'))"),
     md("## 5. Holdout comparison: interpretable baseline vs tuned boosting vs CatBoost/XGBoost"),
     code("from sklearn.linear_model import LogisticRegression\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.pipeline import make_pipeline\n"

@@ -10,9 +10,24 @@ from credit import ROOT
 from viz_style import MUTED, SERIES, TEXT, TEXT_2, apply_style, finish
 
 IMG = ROOT / "images"
+
+
+def styled(fn):
+    """Re-apply the house style before every chart: optuna's plotting helpers switch matplotlib to 'ggplot' globally."""
+    import functools
+
+    @functools.wraps(fn)
+    def wrapper(*args, **kwargs):
+        plt.style.use("default")
+        apply_style()
+        return fn(*args, **kwargs)
+    return wrapper
+
+
 apply_style()
 
 
+@styled
 def lazypredict_chart(lb: pd.DataFrame, path=IMG / "lazypredict_leaderboard.png", top: int = 15):
     d = lb.head(top).iloc[::-1]
     fig, ax = plt.subplots(figsize=(8.5, 5.2))
@@ -27,6 +42,7 @@ def lazypredict_chart(lb: pd.DataFrame, path=IMG / "lazypredict_leaderboard.png"
            "Gradient boosting leads out of the box; this decides what is worth tuning", path)
 
 
+@styled
 def calibration_chart(curves: dict, path=IMG / "calibration.png"):
     fig, ax = plt.subplots(figsize=(6.2, 5.2))
     ax.plot([0, 1], [0, 1], color=TEXT_2, lw=1)
@@ -40,6 +56,7 @@ def calibration_chart(curves: dict, path=IMG / "calibration.png"):
     finish(fig, ax, "SMOTE and class weights distort probabilities", "Reliability curves on the holdout (diagonal = perfectly calibrated)", path)
 
 
+@styled
 def cutoff_chart(cut: pd.DataFrame, chosen: int, path=IMG / "cutoff_strategy.png"):
     fig, ax = plt.subplots(figsize=(8.5, 4))
     ax.plot(cut.approval_rate_pct, cut.bad_rate_pct / 100, color=SERIES[0], marker="o", markersize=5)
@@ -54,6 +71,7 @@ def cutoff_chart(cut: pd.DataFrame, chosen: int, path=IMG / "cutoff_strategy.png
     finish(fig, ax, "Choosing the cut-off: approval rate vs portfolio bad rate", "Holdout applicants ranked by calibrated PD", path)
 
 
+@styled
 def fairness_chart(mf: pd.DataFrame, path=IMG / "fairness.png"):
     d = mf.iloc[::-1]
     fig, ax = plt.subplots(figsize=(8, 3.8))
@@ -68,6 +86,7 @@ def fairness_chart(mf: pd.DataFrame, path=IMG / "fairness.png"):
     finish(fig, ax, "Fairness audit with fairlearn", "Approval and error rates by group at the chosen cut-off", path)
 
 
+@styled
 def score_band_chart(t: pd.DataFrame, path=IMG / "score_bands.png"):
     fig, ax = plt.subplots(figsize=(8.5, 4))
     ax.bar(t.index.astype(str), t.default_rate_pct / 100, color=SERIES[0], width=0.6)
