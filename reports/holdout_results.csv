@@ -1,0 +1,6 @@
+model,roc_auc,gini,ks,brier
+Logistic regression (scorecard-style),0.7625,0.5251,0.401,0.1387
+XGBoost (defaults),0.7794,0.5587,0.4274,0.1347
+CatBoost (defaults),0.7797,0.5594,0.4288,0.1354
+LightGBM (Optuna-tuned),0.7826,0.5652,0.4272,0.1339
+LightGBM tuned + isotonic calibration,0.782,0.564,0.427,0.1343

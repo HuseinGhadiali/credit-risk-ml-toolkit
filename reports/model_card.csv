@@ -1,0 +1,12 @@
+,value
+Model,LightGBM (Optuna-tuned) + isotonic calibration
+Training rows,22500
+Holdout rows,7500
+Holdout ROC AUC,0.782
+Gini,0.564
+KS,0.427
+Brier,0.1343
+Recommended cut-off,approve safest 50%
+Top-decile capture,32.0% of defaulters
+PSI (train vs holdout),0.001
+Known limits,Taiwan 2005 card data; no bureau/income fields; sex & age used only for auditing

@@ -1,0 +1,7 @@
+data/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+catboost_info/
+*.npz
